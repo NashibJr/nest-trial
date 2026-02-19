@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
 import { CreateUserDto } from "src/dtos/createCat.dto";
 import UserService from "src/services/user.service";
 
@@ -18,6 +18,12 @@ class UserController {
         error: error instanceof Error ? error.message : "Internal server error",
       };
     }
+  }
+
+  @Get("/all")
+  @HttpCode(200)
+  async getUsers() {
+    return await this.userService.getUsers();
   }
 }
 

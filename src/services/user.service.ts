@@ -22,6 +22,10 @@ class UserService {
       );
     }
   };
+
+  getUsers = async (): Promise<User[]> => {
+    return await this.user.find();
+  };
 }
 
 export default UserService;
