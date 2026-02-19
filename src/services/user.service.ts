@@ -26,6 +26,10 @@ class UserService {
   getUsers = async (): Promise<User[]> => {
     return await this.user.find();
   };
+
+  getUser = async (id: string): Promise<User | null> => {
+    return await this.user.findById(id);
+  };
 }
 
 export default UserService;

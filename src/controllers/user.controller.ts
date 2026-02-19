@@ -1,6 +1,8 @@
-import { Body, Controller, Get, HttpCode, Post } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, Param, Post } from "@nestjs/common";
 import { CreateUserDto } from "src/dtos/createCat.dto";
+import User from "src/models/user.model";
 import UserService from "src/services/user.service";
+import { type ParamsTypes } from "src/types/types";
 
 @Controller("api/v1/users")
 class UserController {
@@ -24,6 +26,12 @@ class UserController {
   @HttpCode(200)
   async getUsers() {
     return await this.userService.getUsers();
+  }
+
+  @Get("/:id")
+  @HttpCode(200)
+  async getUser(@Param() params: ParamsTypes): Promise<User | null> {
+    return await this.userService.getUser(params.id);
   }
 }
 
