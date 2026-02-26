@@ -8,7 +8,7 @@ import AuthMiddleware from "./middlewares/auth.middleware";
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.DATABASE_URL!),
     UserModule,
   ],

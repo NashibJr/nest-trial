@@ -1,5 +1,6 @@
 import { Body, Controller, Get, HttpCode, Param, Post } from "@nestjs/common";
 import { CreateUserDto } from "src/dtos/createCat.dto";
+import { LoginDto } from "src/dtos/LoginDto";
 import User from "src/models/user.model";
 import UserService from "src/services/user.service";
 import { type ParamsTypes } from "src/types/types";
@@ -32,6 +33,23 @@ class UserController {
   @HttpCode(200)
   async getUser(@Param() params: ParamsTypes): Promise<User | null> {
     return await this.userService.getUser(params.id);
+  }
+
+  @Post("/login")
+  @HttpCode(200)
+  async login(
+    @Body() loginDto: LoginDto,
+  ): Promise<
+    | (Omit<User, "password"> & { message: string; token: string })
+    | { error: string }
+  > {
+    try {
+      return await this.userService.login(loginDto);
+    } catch (error) {
+      return {
+        error: error instanceof Error ? error.message : "Internal server error",
+      };
+    }
   }
 }
 
